@@ -7,17 +7,20 @@
         std::string name;
         int points;
 
+        virtual void print_info_() {
+            std::cout << name << ":\n";
+            std::cout << "Стороны: " << points << "\n";
+        }
     public:
 
         Figure() {
             name = "Фигура";
             points = 0;
         }
-
-        virtual void print_info() {
-            std::cout << name << ":\n";
-            std::cout << "Стороны: " << points << "\n";
+        void print_info(Figure* f) {
+            f->print_info_();
         }
+        
     };
 
     class Triangle : public Figure {
@@ -28,6 +31,12 @@
         int A = 0;
         int B = 0;
         int C = 0;
+
+        void print_info_() override {
+            std::cout << name << ":\n";
+            std::cout << "Стороны: " << a << ' ' << b << ' ' << c << '\n';
+            std::cout << "Углы: " << A << ' ' << B << ' ' << C << '\n';
+        }
 
     public:
         Triangle() {
@@ -48,23 +57,11 @@
     class RightTriangle : public Triangle {
     public:
         RightTriangle(int a, int b, int c, int A, int B) : Triangle(a, b, c, A, B, 90) { name = "Прямоугольный треугольник"; }
-
-        void print_info() override {
-            std::cout << name << ":\n";
-            std::cout << "Стороны: " << a << ' ' << b << ' ' << c << '\n';
-            std::cout << "Углы: " << A << ' ' << B << ' ' << C << '\n';
-        }
     };
 
     class IsoscelesTriangle : public Triangle {
     public:
         IsoscelesTriangle(int a, int c, int A, int C) : Triangle(a, a, c, A, A, C) { name = "Равнобедренный треугольник"; }
-
-        void print_info() override {
-            std::cout << name << ":\n";
-            std::cout << "Стороны: " << a << ' ' << b << ' ' << c << '\n';
-            std::cout << "Углы: " << A << ' ' << B << ' ' << C << '\n';
-        }
     };
 
 
@@ -72,12 +69,6 @@
     class EquilateralTriangle : public Triangle {
     public:
         EquilateralTriangle(int a) : Triangle(a, a, a, 60, 60, 60) { name = "Равносторонний треугольник"; }
-
-        void print_info() override {
-            std::cout << name << ":\n";
-            std::cout << "Стороны: " << a << ' ' << b << ' ' << c << '\n';
-            std::cout << "Углы: " << A << ' ' << B << ' ' << C << '\n';
-        }
     };
 
 
@@ -95,6 +86,11 @@
         int C = 0;
         int D = 0;
 
+        void print_info_() override {
+            std::cout << name << ":\n";
+            std::cout << "Стороны: " << a << " " << b << " " << c << " " << d << "\n";
+            std::cout << "Углы: " << A << " " << B << " " << C << " " << D << "\n";
+        }
     public:
         Quadrangle(int a, int b, int c, int d, int A, int B, int C, int D) : Quadrangle() {
             this->a = a;
@@ -118,12 +114,6 @@
     public:
 
         Parallelogram(int a, int b, int A, int B) : Quadrangle(a, b, a, b, A, B, A, B) { name = "Параллелограмм"; }
-
-        void print_info() override {
-            std::cout << name << ":\n";
-            std::cout << "Стороны: " << a << " " << b << " " << c << " " << d << "\n";
-            std::cout << "Углы: " << A << " " << B << " " << C << " " << D << "\n";
-        }
     };
 
 
@@ -154,36 +144,36 @@
 
         RightTriangle rt = RightTriangle(1, 1, 1, 2, 2);
         Figure* fig = &rt;
-        fig->print_info();
+        rt.print_info(fig);
         std::cout << std::endl;
 
         IsoscelesTriangle it = IsoscelesTriangle(10, 20, 100, 100);
         fig = &it;
-        fig->print_info();
+        rt.print_info(fig);
         std::cout << std::endl;
 
         EquilateralTriangle et = EquilateralTriangle(200);
         fig = &et;
-        fig->print_info();
+        et.print_info(fig);
         std::cout << std::endl;
 
         Parallelogram p = Parallelogram(10, 20, 30, 60);
         fig = &p;
-        fig->print_info();
+        p.print_info(fig);
         std::cout << std::endl;
 
         Rect rect = Rect(10, 20);
         fig = &rect;
-        fig->print_info();
+        rect.print_info(fig);
         std::cout << std::endl;
 
         Rhombus rhomb = Rhombus(10, 45, 45);
         fig = &rhomb;
-        fig->print_info();
+        rhomb.print_info(fig);
         std::cout << std::endl;
 
         Square square = Square(30);
         fig = &square;
-        fig->print_info();
+        square.print_info(fig);
 
 }
